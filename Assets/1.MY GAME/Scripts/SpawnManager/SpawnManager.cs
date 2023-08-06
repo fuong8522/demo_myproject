@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager instance = null;
@@ -36,7 +37,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     public GameObject[] zombiePrefabs;
-    private int timeDelay = 13;
+    public int timeDelay = 13;
     public float timeDelayCountDown = 0;
     public bool check = true;
     public int countWave;
@@ -61,6 +62,7 @@ public class SpawnManager : MonoBehaviour
     public Button buyBarrier;
     void Start()
     {
+        timeDelay = 13;
         countWave = 0;
         spawnzombie = StartCoroutine(DelaySpawnZombie());
     }
@@ -71,11 +73,27 @@ public class SpawnManager : MonoBehaviour
         SpawnWave();
         timeSpawn.text = "Time: " + (int)timeDelayCountDown;
         timeDelayCountDown -= Time.deltaTime;
-        if(countCoint && x < 51 && rewardUI.gameObject.activeSelf == true)
+        if (timeDelayCountDown < 0)
         {
+            timeDelay = 0;
+        }
+        if (countCoint && x < 51 && rewardUI.gameObject.activeSelf == true)
+        {
+
             coin.text = "$" + x.ToString();
             x += 1;
         } 
+
+        if(MovementPlayer.instance == null)
+        {
+            Destroy(this.gameObject);
+        }
+
+        if(MovementPlayer.instance.health > 100)
+        {
+            MovementPlayer.instance.health = 100;
+            hpShop.text = MovementPlayer.instance.health.ToString();
+        }
     }
 
     public void SpawnWave()
@@ -85,10 +103,11 @@ public class SpawnManager : MonoBehaviour
 
         if (zombieCount == 0 && check)
         {
-            if (countWave < 2)
+            if (countWave < 1)
             {
                 buttonNextWave.gameObject.SetActive(true);
                 spawnzombie = StartCoroutine(DelaySpawnZombie());
+                timeDelayCountDown = timeDelay;
             }
             else
             {
@@ -173,13 +192,15 @@ public class SpawnManager : MonoBehaviour
         
         countCoint = true;
     }
-
+    public void DestroySpawnInPause()
+    {
+        Destroy(this.gameObject);
+    }
     public void NextScene()
     {
-        //rewardUI.gameObject.SetActive(false);
-        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(nextSceneIndex + 1, LoadSceneMode.Single);
-        
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        MovementPlayer.instance.dayNumber++;
+        MovementPlayer.instance.SaveFile();
     }
     public void NextShop()
     {
@@ -200,11 +221,11 @@ public class SpawnManager : MonoBehaviour
         check = true;
         countWave++;
 
-        int numberofwave = SceneManager.GetActiveScene().buildIndex;
+        int numberofwave = MovementPlayer.instance.dayNumber;
         for (int i = 0; i <= numberofwave; i++)
         {
         Vector3 spawnPos = new Vector3(Random.Range(-5, 5), 0, MovementPlayer.instance.transform.position.z + Random.RandomRange(19, 35));
-        int zombieIndex = Random.Range(0, zombiePrefabs.Length);
+            int zombieIndex = Random.Range(0, zombiePrefabs.Length);
             Instantiate(zombiePrefabs[zombieIndex], spawnPos, zombiePrefabs[zombieIndex].transform.rotation);
         }
     }

@@ -11,6 +11,7 @@ public class Obstacle : MonoBehaviour
     public Material red;
     public Material green;
     public bool checkRed = false;
+
     private void Start()
     {
         body = GetComponent<Rigidbody>();

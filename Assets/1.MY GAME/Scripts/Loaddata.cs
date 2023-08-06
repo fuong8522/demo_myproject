@@ -9,15 +9,31 @@ public class Loaddata : MonoBehaviour
 {
     public CinemachineVirtualCamera cam;
     public Image image;
+
+
     void Start()
     {
         cam = GameObject.Find("Isometric Camera").GetComponent<CinemachineVirtualCamera>();
-        if (cam.Follow == null)
+
+
+        cam.Follow = MovementPlayer.instance.transform;
+        SpawnManager.instance.timeDelay = 13;
+        MovementPlayer.instance.dayText = GameObject.Find("ContentDay").GetComponent<TextMeshProUGUI>();
+        if(MovementPlayer.instance.gameOverPanel == null)
         {
-            cam.Follow = MovementPlayer.instance.transform;
+            MovementPlayer.instance.gameOverPanel = GameObject.Find("GameOver");
+        }
+        MovementPlayer.instance.gameOverPanel.SetActive(false);
+        if (MovementPlayer.instance.dayNumber == 0)
+        {
+            MovementPlayer.instance.dayText.text = "Day " + 1;
+        }
+        else
+        {
+            MovementPlayer.instance.dayText.text = "Day " + MovementPlayer.instance.dayNumber;
         }
 
-        if(MovementPlayer.instance.uiPunch == null)
+        if (MovementPlayer.instance.uiPunch == null)
         {
         MovementPlayer.instance.uiPunch = GameObject.Find("DelayImagePunch");
         MovementPlayer.instance.uiPunch.SetActive(false);
@@ -30,6 +46,7 @@ public class Loaddata : MonoBehaviour
             MovementPlayer.instance.healbar = GameObject.Find("HealBar").GetComponent<HealBar>(); 
             MovementPlayer.instance.SetHealBar();
         }
+            MovementPlayer.instance.healbar.SetHeal(MovementPlayer.instance.health);
         if (MovementPlayer.instance.joyStick == null)
         {
             MovementPlayer.instance.joyStick = GameObject.Find("Floating Joystick").GetComponent<FloatingJoystick>();
@@ -71,8 +88,6 @@ public class Loaddata : MonoBehaviour
         {
             MovementPlayer.instance.textBarrier = GameObject.Find("BarrierAmount").GetComponent<TextMeshProUGUI>();
             MovementPlayer.instance.textBarrier.text = MovementPlayer.instance.barrierAmount.ToString();
-
-
         }
         //get component text coin.
         if (MovementPlayer.instance.textCoin == null)
@@ -81,10 +96,10 @@ public class Loaddata : MonoBehaviour
             MovementPlayer.instance.textCoin.text = MovementPlayer.instance.coin + "";
         }
         //get component coin next position.
-/*        if (MovementPlayer.instance.CoinNextPos == null)
-        {
-            MovementPlayer.instance.CoinNextPos = GameObject.Find("Coin").GetComponent<Transform>();
-        }*/
+        /*        if (MovementPlayer.instance.CoinNextPos == null)
+                {
+                    MovementPlayer.instance.CoinNextPos = GameObject.Find("Coin").GetComponent<Transform>();
+                }*/
         //get component coint UI.
         if (true)
         {
@@ -104,9 +119,14 @@ public class Loaddata : MonoBehaviour
             SpawnManager.instance.buyHp = GameObject.Find("BuyHP").GetComponent<Button>();
             SpawnManager.instance.buyBarrier = GameObject.Find("BuyBarrier").GetComponent<Button>();
             SpawnManager.instance.buySpeed = GameObject.Find("BuySpeed").GetComponent<Button>();
-
         }
+        MovementPlayer.instance.trafficBarrier = GameObject.Find("TrafficBarrier").GetComponent<Button>();
+        MovementPlayer.instance.trafficBarrier.onClick.AddListener(MovementPlayer.instance.CreateGreenObstacle);
+        MovementPlayer.instance.selectTrueFalse = GameObject.Find("Select");
 
+        MovementPlayer.instance.buttonTrue = GameObject.Find("True").GetComponent<Button>();
+        MovementPlayer.instance.buttonTrue.onClick.AddListener(MovementPlayer.instance.SetCheckCreate);
+        MovementPlayer.instance.selectTrueFalse.SetActive(false);
         //get component reware UI.
         if (SpawnManager.instance.rewardUI == null)
         {
@@ -129,9 +149,4 @@ public class Loaddata : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

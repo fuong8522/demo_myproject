@@ -86,12 +86,15 @@ public class EnemyFollow : MonoBehaviour
     }
     public void OnAnimationAttack()
     {
-        //Zombie attack player
-        if ((animator.GetBool("Walk") == false ) && !deadth)
+        if(player != null)
         {
-            transform.forward = player.transform.position - transform.position;
+            //Zombie attack player
+            if ((animator.GetBool("Walk") == false ) && !deadth)
+            {
+                transform.forward = player.transform.position - transform.position;
 
-            animator.SetTrigger("Collision");
+                animator.SetTrigger("Collision");
+            }
         }
     }
 
@@ -105,11 +108,10 @@ public class EnemyFollow : MonoBehaviour
             attacked = true;
             OnDeadth();
         }
-        if(other.gameObject.CompareTag("Obstacle"))
+        if(other.gameObject.CompareTag("stopZombie"))
         {
             checkObstacle = true;
             agent.SetDestination(transform.position);
-
         }
     }
 
@@ -147,7 +149,10 @@ public class EnemyFollow : MonoBehaviour
         {
             if(!checkObstacle)
             {
-                agent.SetDestination(player.position);
+                if(player != null)
+                {
+                    agent.SetDestination(player.position);
+                }
             }
         }
     }

@@ -44,4 +44,22 @@ public class Pause : MonoBehaviour
         Destroy(obltacleGreen);
         MovementPlayer.instance.barrierAmount++;
     }
+
+    public void LoadRestart()
+    {
+        MovementPlayer.instance.gameOverPanel.SetActive(false);
+        SceneManager.LoadScene(1);
+        MovementPlayer.instance.LoadFilenewGame();
+        Destroy(MovementPlayer.instance);
+        Destroy(SpawnManager.instance);
+    }
+    public void LoadRestartInPause()
+    {
+        Time.timeScale = 1f;
+        MovementPlayer.instance.gameOverPanel.SetActive(false);
+        SceneManager.LoadScene(1);
+        MovementPlayer.instance.LoadFilenewGame();
+        MovementPlayer.instance.GameOverInPause();
+        SpawnManager.instance.DestroySpawnInPause();
+    }
 }

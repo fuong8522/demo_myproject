@@ -13,6 +13,7 @@ TagManager:
   - DelayImagePunchTag
   - Coin
   - Obstacle
+  - stopZombie
   layers:
   - Default
   - TransparentFX

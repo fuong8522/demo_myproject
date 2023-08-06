@@ -78,6 +78,7 @@
     <Compile Include="Assets\1.MY GAME\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
     <Compile Include="Assets\1.MY GAME\Joystick Pack\Scripts\Base\Joystick.cs" />
     <Compile Include="Assets\1.MY GAME\Scripts\SpawnManager\CapacityUnrise.cs" />
+    <Compile Include="Assets\1.MY GAME\Scripts\Data\SaveData.cs" />
     <Compile Include="Assets\EffectBlood\packs\WebDemoAssets\scripts\ExplodingProjectile.cs" />
     <Compile Include="Assets\1.MY GAME\Scripts\SoundManager\AudioEnemy.cs" />
     <Compile Include="Assets\EffectBlood\scripts\destroyMe.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Assets\1.MY GAME\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\1.MY GAME\Scripts\UI\Setting.cs" />
     <Compile Include="Assets\1.MY GAME\Scripts\Player\SpawnBall.cs" />
+    <Compile Include="Assets\1.MY GAME\Scripts\Data\LoadData_.cs" />
     <Compile Include="Assets\1.MY GAME\Scripts\Camera\CamManager.cs" />
     <Compile Include="Assets\EffectBlood\scripts\particleColorChangerMaster.cs" />
     <Compile Include="Assets\1.MY GAME\Scripts\Player\WeaponSwitching.cs" />
